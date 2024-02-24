@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Button } from '@mui/material';
+import styled from "styled-components";
+import { Button } from "@mui/material";
 
 export const RedButton = styled(Button)`
   && {
@@ -61,10 +61,10 @@ export const PurpleButton = styled(Button)`
 
 export const LightPurpleButton = styled(Button)`
   && {
-    background-color: #7f56da;
+    background-color: #3f508d;
     color: #fff;
     &:hover {
-      background-color: #7a1ccb;
+      background-color: #5f78d1;
     }
   }
 `;

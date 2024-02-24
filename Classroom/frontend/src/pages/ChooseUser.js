@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Grid,
   Paper,
@@ -71,9 +71,10 @@ const ChooseUser = ({ visitor }) => {
                 <Box mb={2}>
                   <AccountCircle fontSize="large" />
                 </Box>
-                <StyledTypography>Admin</StyledTypography>
-                Login as an administrator to access the dashboard to manage app
-                data.
+                <StyledTypography>
+                  Admin
+                </StyledTypography>
+                Login as an administrator to access the dashboard to manage app data.
               </StyledPaper>
             </div>
           </Grid>
@@ -83,7 +84,9 @@ const ChooseUser = ({ visitor }) => {
                 <Box mb={2}>
                   <School fontSize="large" />
                 </Box>
-                <StyledTypography>Student</StyledTypography>
+                <StyledTypography>
+                  Student
+                </StyledTypography>
                 Login as a student to explore course materials and assignments.
               </div>
             </StyledPaper>
@@ -94,9 +97,10 @@ const ChooseUser = ({ visitor }) => {
                 <Box mb={2}>
                   <Group fontSize="large" />
                 </Box>
-                <StyledTypography>Teacher</StyledTypography>
-                Login as a teacher to create courses, assignments, and track
-                student progress.
+                <StyledTypography>
+                  Teacher
+                </StyledTypography>
+                Login as a teacher to create courses, assignments, and track student progress.
               </div>
             </StyledPaper>
           </Grid>

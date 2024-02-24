@@ -1,58 +1,46 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Grid, Box, Button } from '@mui/material';
-import styled from 'styled-components';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Container, Grid, Box, Button } from "@mui/material";
+import styled from "styled-components";
 import Students from "../assets/students.svg";
-import { LightPurpleButton } from '../components/buttonStyles';
+import { LightPurpleButton } from "../components/buttonStyles";
+import { Diversity1Rounded } from "@mui/icons-material";
 
 const Homepage = () => {
-    return (
-        <StyledContainer>
-            <Grid container spacing={0}>
-                <Grid item xs={12} md={6}>
-                    <img src={Students} alt="students" style={{ width: '100%' }} />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <StyledPaper elevation={3}>
-                        <StyledTitle>
-                            Welcome to
-                            <br />
-                            School Management
-                            <br />
-                            System
-                        </StyledTitle>
-                        <StyledText>
-                            Streamline school management, class organization, and add students and faculty.
-                            Seamlessly track attendance, assess performance, and provide feedback.
-                            Access records, view marks, and communicate effortlessly.
-                        </StyledText>
-                        <StyledBox>
-                            <StyledLink to="/choose">
-                                <LightPurpleButton variant="contained" fullWidth>
-                                    Login
-                                </LightPurpleButton>
-                            </StyledLink>
-                            <StyledText>
-                                Don't have an account?{' '}
-                                <Link to="/Adminregister" style={{color:"#550080"}}>
-                                    Sign up
-                                </Link>
-                            </StyledText>
-                        </StyledBox>
-                    </StyledPaper>
-                </Grid>
-            </Grid>
-        </StyledContainer>
-    );
+  return (
+    // <StyledContainer>
+    <div className="ashok">
+      <StyledTitle>Welcome to ClassConnect</StyledTitle>
+      <StyledText className="home-text">
+        Unlocking Potential, One Personalized Learning Journey at a Time –
+        Elevate Education with Seamless Class Management for Educators and
+        Learners!
+      </StyledText>
+      <StyledBox>
+        <StyledLink to="/choose">
+          <LightPurpleButton variant="contained" fullWidth>
+            Login
+          </LightPurpleButton>
+        </StyledLink>
+
+        <StyledText>
+          Don't have an account?{" "}
+          <Link to="/Adminregister" style={{ color: "#550080" }}>
+            Sign up
+          </Link>
+        </StyledText>
+      </StyledBox>
+    </div>
+  );
 };
 
 export default Homepage;
 
 const StyledContainer = styled(Container)`
+  min-height: 100vh; /* Make sure the container covers at least the viewport height */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 `;
 
 const StyledPaper = styled.div`
@@ -64,7 +52,7 @@ const StyledBox = styled(Box)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content:center;
+  justify-content: center;
   gap: 16px;
   padding: 24px;
 `;
@@ -82,7 +70,7 @@ const StyledTitle = styled.h1`
 const StyledText = styled.p`
   /* color: #550080; */
   margin-top: 30px;
-  margin-bottom: 30px; 
+  margin-bottom: 30px;
   letter-spacing: normal;
   line-height: normal;
 `;
