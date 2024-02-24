@@ -29,23 +29,20 @@
   <h3>Installation</h3>
   <ol>
     <li>Clone the GitHub repository:</li>
-    <pre><code>git clone https://github.com/yourusername/school-management-system.git</code></pre>
+    <pre><code>git clone https://github.com/AshokShekade2003/Innov8Coders_ClassConnect.git</code></pre>
     <li>Navigate to the project directory:</li>
     <pre><code>cd school-management-system</code></pre>
     <li>Install backend dependencies and start the server:</li>
-    <pre><code>cd backend<br>npm install<br>npm start</code></pre>
+    <pre><code>cd backend</code></pre>
+    <pre><code>npm install</code></pre>
+    <pre><code>npm start</code></pre>
     <li>Open a new terminal tab/window, navigate to the project directory again, and install frontend dependencies:</li>
-    <pre><code>cd ../frontend<br>npm install</code></pre>
+    <pre><code>cd frontend</code></pre>
+    <pre><code>npm install</code></pre>
     <li>Start the frontend server:</li>
     <pre><code>npm start</code></pre>
     <li>Access the application in your browser at <code>localhost:3000</code>.</li>
   </ol>
-
-  <h3>Deployment</h3>
-  <ul>
-    <li><strong>Server Side:</strong> Render</li>
-    <li><strong>Client Side:</strong> Netlify</li>
-  </ul>
 
   <h2>Additional Notes</h2>
   <ul>
@@ -54,6 +51,5 @@
     <li>The frontend provides visualizations such as pie charts to display attendance and grades, enhancing the personalized education experience.</li>
   </ul>
 
-  <p>For a visual overview of the project, check out the <a href="https://youtu.be/ol650KwQkgY?si=rKcboqSv3n-e4UbC">YouTube Video</a> or connect with <a href="https://www.linkedin.com/in/yogndr/">LinkedIn</a> for further inquiries.</p>
 </body>
 </html>
