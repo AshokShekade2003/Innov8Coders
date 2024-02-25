@@ -308,12 +308,10 @@ const ViewStudent = () => {
 
         return (
             <>
-<<<<<<< HEAD
+
                 {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0 ? (
-=======
-                {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0
-                    ?
->>>>>>> c3c74eaca1631bddbd358ca83ff94ad79b02e137
+
+
                     <>
                         {selectedSection === 'table' && renderTableSection()}
                         {selectedSection === 'chart' && renderChartSection()}
@@ -333,15 +331,8 @@ const ViewStudent = () => {
                             </BottomNavigation>
                         </Paper>
                     </>
-<<<<<<< HEAD
+
                 ) : null}
-=======
-                    : null
-                    // <Button variant="contained" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/marks/" + studentID)}>
-                    //     Add Marks
-                    // </Button>
-                }
->>>>>>> c3c74eaca1631bddbd358ca83ff94ad79b02e137
             </>
         );
     }

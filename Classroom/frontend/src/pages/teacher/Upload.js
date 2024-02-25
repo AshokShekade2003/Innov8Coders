@@ -37,7 +37,7 @@ function Upload() {
     formData.append("title", title);
     formData.append("file", file);
     formData.append("user",currentUser.teachSclass._id);
-    console.log(title, file);
+    // console.log(title, file);
     const result = await axios.post(
       "http://localhost:5000/upload-files",
       formData,
@@ -46,7 +46,7 @@ function Upload() {
       }
     );
 
-    console.log(result);
+    // console.log(result);
     if (result.data.status === "ok") {
       alert("Uploaded Successfully!!!");
       getPdf();
