@@ -67,7 +67,7 @@ const AdminDashboard = () => {
           <AppBar
             open={open}
             position="absolute"
-            sx={{ backgroundColor: "#21618C " }}
+            sx={{ backgroundColor: "#1670c9 " }}
           >
             <Toolbar sx={{ pr: "24px", height: "70px" }}>
               <IconButton
@@ -99,10 +99,7 @@ const AdminDashboard = () => {
             open={open}
             sx={open ? styles.drawerStyled : styles.hideDrawer}
           >
-            <Toolbar
-              onClick={toggleDrawer}
-              sx={{ height: "7%" }}
-            >
+            <Toolbar onClick={toggleDrawer} sx={{ height: "7%" }}>
               <IconButton>
                 <ChevronLeftIcon />
               </IconButton>

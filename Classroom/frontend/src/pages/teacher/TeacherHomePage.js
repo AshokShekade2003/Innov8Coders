@@ -6,6 +6,7 @@ import Students from "../../assets/img1.png";
 import Lessons from "../../assets/subjects.svg";
 import Tests from "../../assets/assignment.svg";
 import Time from "../../assets/time.svg";
+
 import { getClassStudents, getSubjectDetails } from '../../redux/sclassRelated/sclassHandle';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -71,6 +72,8 @@ const TeacherHomePage = () => {
                             <SeeNotice />
                         </Paper>
                     </Grid>
+                   
+                   
                 </Grid>
             </Container>
         </>
@@ -96,7 +99,7 @@ const StyledPaper = styled(Paper)`
 `;
 
 const Title = styled.p`
-  font-size: 2rem;
+  font-size: 1.3rem;
   margin-bottom: 3px;
   font-weight: bold;
   color: #333;
@@ -105,5 +108,6 @@ const Title = styled.p`
 const Data = styled(CountUp)`
   font-size: calc(1.3rem +0.6vw);
 `;
+
 
 export default TeacherHomePage
