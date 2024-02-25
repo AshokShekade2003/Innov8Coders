@@ -24,6 +24,11 @@ const {
     removeStudentAttendance } = require('../controllers/student_controller.js');
 const { subjectCreate, classSubjects, deleteSubjectsByClass, getSubjectDetail, deleteSubject, freeSubjectList, allSubjects, deleteSubjects } = require('../controllers/subject-controller.js');
 const { teacherRegister, teacherLogIn, getTeachers, getTeacherDetail, deleteTeachers, deleteTeachersByClass, deleteTeacher, updateTeacherSubject, teacherAttendance } = require('../controllers/teacher-controller.js');
+const { getMeetings } = require('../controllers/zoom-controller.js');
+
+
+//ZOOM
+router.get('/zoomLink',getMeetings);
 
 // Admin
 router.post('/AdminReg', adminRegister);
