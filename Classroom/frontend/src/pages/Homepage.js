@@ -28,12 +28,12 @@ const Homepage = () => {
           </LightPurpleOutlinedButton>
         </StyledLink>
 
-        <StyledText>
+        {/* <StyledText>
           Don't have an account?{" "}
           <Link to="/Adminregister" style={{ color: "#550080" }}>
             Sign up
           </Link>
-        </StyledText>
+        </StyledText> */}
       </StyledBox>
     </div>
   );

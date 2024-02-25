@@ -75,6 +75,11 @@ export const LightPurpleOutlinedButton = styled(Button)`
     color: #000000;
     background-color: ##96be25;
     font-weight: bold;
+    padding: 12px 24px;
+    font-size: 18px; /* Increase font size */
+    & .MuiButton-startIcon, & .MuiButton-endIcon { /* Adjust icon size */
+      font-size: 24px;
+    }
     &:hover {
       background-color: #252525;
       border-color: #252525;
