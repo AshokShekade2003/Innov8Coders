@@ -237,10 +237,10 @@ const LoginPage = ({ role }) => {
                 container
                 sx={{ display: "flex", justifyContent: "space-between" }}
               >
-                <FormControlLabel
+                {/* <FormControlLabel
                   control={<Checkbox value="remember" color="primary" />}
                   label="Remember me"
-                />
+                /> */}
                 <StyledLink href="#">Forgot password?</StyledLink>
               </Grid>
               <LightPurpleButton
