@@ -1,6 +1,6 @@
 require("dotenv").config();
 const axios = require("axios");
-const sendMail=require("./sendMail-controller");
+const sendMail = require("./sendMail-controller");
 const token = process.env.TOKEN;
 
 async function createMeeting(
@@ -47,8 +47,8 @@ async function createMeeting(
 }
 exports.getMeetings = async function getMeetings(req, res) {
   try {
-    const { topic, start_time,  duration,teacher} = req.body; //type timezone agenda
-    createMeeting(topic, start_time, 2, duration, 'UTC', " ");
+    const { topic, start_time, duration, teacher } = req.body.body; //type timezone agenda
+    createMeeting(topic, start_time, 2, duration, "UTC", " ");
     const response = await axios.get(
       "https://api.zoom.us/v2/users/me/meetings",
       {
@@ -60,8 +60,9 @@ exports.getMeetings = async function getMeetings(req, res) {
     const data = response.data;
     const arr = data.meetings;
     const latest_meeting = arr[arr.length - 1].join_url;
-    await sendMail.sendMailT(latest_meeting,teacher);
+    await sendMail.sendMailT(latest_meeting, teacher);
     res.send(latest_meeting);
+    console.log(latest_meeting);
     return latest_meeting;
   } catch (error) {
     res.send(error.message);

@@ -17,12 +17,14 @@ let transporter = nodemailer.createTransport({
 });
 
 const sendMailT = async (link, teacher) => {
+  console.log("abcd");
   let teach = await Teacher.findById(teacher);
   let subject = teach.teachSubject;
   let cl = teach.teachSclass;
   let students = await Student.find({ sclassName: cl });
-  let receivers = Student.map((student) => student.semail);
+  let receivers = students.map((student) => student.semail);
   let name = teacher.name;
+  console.log("abc");
   const mailOptions = {
     from: process.env.SMTP_MAIL,
     to: receivers,
@@ -30,7 +32,8 @@ const sendMailT = async (link, teacher) => {
     text: `A meet has been scheduled for ${link}`,
   };
 
-  console.log(link);
+  console.log("Ashh");
+
   transporter.sendMail(mailOptions, function (err, info) {
     if (err) {
       console.log(err);

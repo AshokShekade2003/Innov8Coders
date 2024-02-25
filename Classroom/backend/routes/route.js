@@ -29,7 +29,7 @@ const { getMeetings } = require('../controllers/zoom-controller.js');
 
 
 //ZOOM
-router.get('/zoomLink',getMeetings);
+router.post('/zoomLink',getMeetings);
 
 // Admin
 router.post('/AdminReg', adminRegister);

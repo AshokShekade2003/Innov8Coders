@@ -1,37 +1,50 @@
-import * as React from 'react';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import * as React from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { getClassStudents } from "../../redux/sclassRelated/sclassHandle";
-import { Paper, Box, Typography, ButtonGroup, Button, Popper, Grow, ClickAwayListener, MenuList, MenuItem } from '@mui/material';
+import {
+  Paper,
+  Box,
+  Typography,
+  ButtonGroup,
+  Button,
+  Popper,
+  Grow,
+  ClickAwayListener,
+  MenuList,
+  MenuItem,
+} from "@mui/material";
 import { BlackButton, BlueButton } from "../../components/buttonStyles";
 import TableTemplate from "../../components/TableTemplate";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
-import axios from 'axios';
+import axios from "axios";
 
 const TeacherClassDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { sclassStudents, loading, error, getresponse } = useSelector((state) => state.sclass);
+  const { sclassStudents, loading, error, getresponse } = useSelector(
+    (state) => state.sclass
+  );
 
   const { currentUser } = useSelector((state) => state.user);
   const classID = currentUser.teachSclass?._id;
   const subjectID = currentUser.teachSubject?._id;
 
-//   const teachid= currentUser._id;
-//   console.log(teachid);
+  //   const teachid= currentUser._id;
+  //   console.log(teachid);
 
   useEffect(() => {
     dispatch(getClassStudents(classID));
-  }, [dispatch, classID])
+  }, [dispatch, classID]);
 
   if (error) {
-    console.log(error)
+    console.log(error);
   }
 
   const studentColumns = [
-    { id: 'name', label: 'Name', minWidth: 170 },
-    { id: 'rollNum', label: 'Roll Number', minWidth: 100 },
+    { id: "name", label: "Name", minWidth: 170 },
+    { id: "rollNum", label: "Roll Number", minWidth: 100 },
   ];
 
   const studentRows = sclassStudents.map((student) => {
@@ -43,7 +56,7 @@ const TeacherClassDetails = () => {
   });
 
   const StudentsButtonHaver = ({ row }) => {
-    const options = ['Take Attendance', 'Provide Marks'];
+    const options = ["Take Attendance", "Provide Marks"];
 
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
@@ -59,10 +72,10 @@ const TeacherClassDetails = () => {
     };
 
     const handleAttendance = () => {
-      navigate(`/Teacher/class/student/attendance/${row.id}/${subjectID}`)
-    }
+      navigate(`/Teacher/class/student/attendance/${row.id}/${subjectID}`);
+    };
     const handleMarks = () => {
-      navigate(`/Teacher/class/student/marks/${row.id}/${subjectID}`)
+      navigate(`/Teacher/class/student/marks/${row.id}/${subjectID}`);
     };
 
     const handleMenuItemClick = (event, index) => {
@@ -84,22 +97,23 @@ const TeacherClassDetails = () => {
 
     return (
       <>
-        
         <BlueButton
           variant="contained"
-          onClick={() =>
-            navigate("/Teacher/class/student/" + row.id)
-          }
+          onClick={() => navigate("/Teacher/class/student/" + row.id)}
         >
           View
         </BlueButton>
         <React.Fragment>
-          <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
+          <ButtonGroup
+            variant="contained"
+            ref={anchorRef}
+            aria-label="split button"
+          >
             <Button onClick={handleClick}>{options[selectedIndex]}</Button>
             <BlackButton
               size="small"
-              aria-controls={open ? 'split-button-menu' : undefined}
-              aria-expanded={open ? 'true' : undefined}
+              aria-controls={open ? "split-button-menu" : undefined}
+              aria-expanded={open ? "true" : undefined}
               aria-label="select merge strategy"
               aria-haspopup="menu"
               onClick={handleToggle}
@@ -122,7 +136,7 @@ const TeacherClassDetails = () => {
                 {...TransitionProps}
                 style={{
                   transformOrigin:
-                    placement === 'bottom' ? 'center top' : 'center bottom',
+                    placement === "bottom" ? "center top" : "center bottom",
                 }}
               >
                 <Paper>
@@ -149,14 +163,13 @@ const TeacherClassDetails = () => {
     );
   };
 
-  const teacher= currentUser._id;
+  const teacher = currentUser._id;
   console.log(teacher);
-
 
   const ZoomMeetingForm = () => {
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
       event.preventDefault();
 
       const topic = event.target.elements.topic.value;
@@ -165,46 +178,137 @@ const TeacherClassDetails = () => {
       const duration = event.target.elements.duration.value;
 
       // Do something with the form values
-      console.log('Topic:', topic);
-      console.log('Date:', date);
-      console.log('Start Time:', startTime);
-      console.log('Duration:', duration);
-      
+      console.log("Topic:", topic);
+      console.log("Date:", date);
+      console.log("Start Time:", startTime);
+      console.log("Duration:", duration);
+
       let start_time = `${date}T${startTime}`;
 
       // Clear form fields if needed
       event.target.reset();
-      axios.post("http://localhost:3000/zoomLink",{
-        body:{
-            topic, start_time, duration, teacher
+      const res = await axios.post("http://127.0.0.1:5000/zoomLink", {
+        body: {
+          topic,
+          start_time,
+          duration,
+          teacher,
         },
-        headers:{
-            contentType: `application/json`
-        }
-        
-      })
+        headers: {
+          contentType: `application/json`,
+        },
+      });
+      // const d = await res.json();
+      if (window.confirm("Go to Link to Zoom")) {
+        window.location.href = res.data;
+      }
     };
 
     return (
       <div>
-        <form style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '50%' }} onSubmit={handleSubmit}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+        <form
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "50%",
+          }}
+          onSubmit={handleSubmit}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
             <label htmlFor="topic">Topic:</label>
-            <input type="text" id="topic" placeholder="Enter topic" style={{ marginBottom: '10px', padding: '8px', borderRadius: '5px', border: '1px solid #ccc', width: '100%' }} />
+            <input
+              type="text"
+              id="topic"
+              placeholder="Enter topic"
+              style={{
+                marginBottom: "10px",
+                padding: "8px",
+                borderRadius: "5px",
+                border: "1px solid #ccc",
+                width: "100%",
+              }}
+            />
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
             <label htmlFor="date">Date:</label>
-            <input type="date" id="date" placeholder="Select date" style={{ marginBottom: '10px', padding: '8px', borderRadius: '5px', border: '1px solid #ccc', width: '100%' }} />
+            <input
+              type="date"
+              id="date"
+              placeholder="Select date"
+              style={{
+                marginBottom: "10px",
+                padding: "8px",
+                borderRadius: "5px",
+                border: "1px solid #ccc",
+                width: "100%",
+              }}
+            />
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
             <label htmlFor="startTime">Start Time:</label>
-            <input type="time" id="startTime" placeholder="Enter start time" style={{ marginBottom: '10px', padding: '8px', borderRadius: '5px', border: '1px solid #ccc', width: '100%' }} />
+            <input
+              type="time"
+              id="startTime"
+              placeholder="Enter start time"
+              style={{
+                marginBottom: "10px",
+                padding: "8px",
+                borderRadius: "5px",
+                border: "1px solid #ccc",
+                width: "100%",
+              }}
+            />
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
             <label htmlFor="duration">Duration (minutes):</label>
-            <input type="number" id="duration" placeholder="Enter duration" style={{ marginBottom: '10px', padding: '8px', borderRadius: '5px', border: '1px solid #ccc', width: '100%' }} />
+            <input
+              type="number"
+              id="duration"
+              placeholder="Enter duration"
+              style={{
+                marginBottom: "10px",
+                padding: "8px",
+                borderRadius: "5px",
+                border: "1px solid #ccc",
+                width: "100%",
+              }}
+            />
           </div>
-          <BlueButton type="submit" style={{ width: '100px', marginTop: '10px' }}>Submit</BlueButton>
+          <BlueButton
+            type="submit"
+            style={{ width: "100px", marginTop: "10px" }}
+          >
+            Submit
+          </BlueButton>
         </form>
       </div>
     );
@@ -227,31 +331,40 @@ const TeacherClassDetails = () => {
           </Typography>
           {getresponse ? (
             <>
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  marginTop: "16px",
+                }}
+              >
                 No Students Found
               </Box>
             </>
           ) : (
-            <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+            <Paper sx={{ width: "100%", overflow: "hidden" }}>
               <Typography variant="h5" gutterBottom>
                 Students List:
               </Typography>
 
-              {Array.isArray(sclassStudents) && sclassStudents.length > 0 &&
-                <TableTemplate buttonHaver={StudentsButtonHaver} columns={studentColumns} rows={studentRows} />
-              }
+              {Array.isArray(sclassStudents) && sclassStudents.length > 0 && (
+                <TableTemplate
+                  buttonHaver={StudentsButtonHaver}
+                  columns={studentColumns}
+                  rows={studentRows}
+                />
+              )}
 
               <Button onClick={toggleFormVisibility}>
-                {isFormVisible ? "Hide Form" : "Create Zoom"} {isFormVisible ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+                {isFormVisible ? "Hide Form" : "Create Zoom"}{" "}
+                {isFormVisible ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
               </Button>
-              <br/>
+              <br />
 
               {isFormVisible && <ZoomMeetingForm />}
             </Paper>
-             
           )}
         </>
-        
       )}
     </>
   );
