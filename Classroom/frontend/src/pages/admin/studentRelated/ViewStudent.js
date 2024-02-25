@@ -191,9 +191,15 @@ const ViewStudent = () => {
                                                 onClick={() => handleOpen(subId)}>
                                                 {openStates[subId] ? <KeyboardArrowUp /> : <KeyboardArrowDown />}Details
                                             </Button>
-                                            <IconButton onClick={() => removeSubAttendance(subId)}>
-                                                <DeleteIcon color="error" />
-                                            </IconButton>
+                                            <Button variant="contained" color="error" onClick={() => removeSubAttendance(subId)} sx={{
+        ...styles.attendanceButton,
+        backgroundColor: '#d32f2f', // Error red color
+        '&:hover': {
+            backgroundColor: '#b71c1c', // Darker shade on hover
+        },
+    }}>
+                                                Delete
+                                            </Button>
                                             <Button variant="contained" sx={styles.attendanceButton}
                                                 onClick={() => navigate(`/Admin/subject/student/attendance/${studentID}/${subId}`)}>
                                                 Change
@@ -285,9 +291,9 @@ const ViewStudent = () => {
                             })}
                         </TableBody>
                     </Table>
-                    {/* <Button variant="contained" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/marks/" + studentID)}>
+                    <Button variant="contained" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/marks/" + studentID)}>
                         Add Marks
-                    </Button> */}
+                    </Button>
                 </>
             );
         }
@@ -302,7 +308,12 @@ const ViewStudent = () => {
 
         return (
             <>
+<<<<<<< HEAD
                 {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0 ? (
+=======
+                {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0
+                    ?
+>>>>>>> c3c74eaca1631bddbd358ca83ff94ad79b02e137
                     <>
                         {selectedSection === 'table' && renderTableSection()}
                         {selectedSection === 'chart' && renderChartSection()}
@@ -322,7 +333,15 @@ const ViewStudent = () => {
                             </BottomNavigation>
                         </Paper>
                     </>
+<<<<<<< HEAD
                 ) : null}
+=======
+                    : null
+                    // <Button variant="contained" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/marks/" + studentID)}>
+                    //     Add Marks
+                    // </Button>
+                }
+>>>>>>> c3c74eaca1631bddbd358ca83ff94ad79b02e137
             </>
         );
     }

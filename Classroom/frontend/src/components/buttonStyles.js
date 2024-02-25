@@ -69,6 +69,25 @@ export const LightPurpleButton = styled(Button)`
   }
 `;
 
+export const LightPurpleOutlinedButton = styled(Button)`
+  && {
+    border: 2px solid #000000;
+    color: #000000;
+    background-color: ##96be25;
+    font-weight: bold;
+    padding: 12px 24px;
+    font-size: 18px; /* Increase font size */
+    & .MuiButton-startIcon, & .MuiButton-endIcon { /* Adjust icon size */
+      font-size: 24px;
+    }
+    &:hover {
+      background-color: #252525;
+      border-color: #252525;
+      color: #fff;
+    }
+  }
+`;
+
 export const GreenButton = styled(Button)`
   && {
     background-color: #133104;
