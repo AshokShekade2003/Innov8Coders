@@ -12,7 +12,7 @@
   <h2>Functionalities</h2>
   <ul>
     <li><strong>User Roles:</strong> The system supports three user roles: Admin, Teacher, and Student, each with specific functionalities and access levels.</li>
-    <li><strong>Effortless Zoom Meeting Creation:</strong> The platform integrates with Zoom to automate meeting link generation. Zoom meeting links are distributed automatically to designated rooms, simplifying virtual class management.</li>
+    <li><strong>Effortless Zoom Meeting Creation:</strong> The platform integrates with Zoom to automate meeting link generation. Zoom meeting links are distributed automatically to designated rooms and to their registered emails as well.</li>
     <li><strong>Personalized students' stats: Analysis of attendance of the student and marks obtained by him/her in each subject.</li>
     <li><strong>Providing study material: Teacher of a particular class will upload study material, which will be accessible to the students of that class only.</li>
     <li><strong>Secure Admin Dashboard:</strong> Admins have controlled access to administrative features, enabling them to manage users, classes, subjects, and system settings securely.</li>
