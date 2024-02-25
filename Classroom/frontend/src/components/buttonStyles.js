@@ -32,7 +32,7 @@ export const DarkRedButton = styled(Button)`
     background-color: #650909;
     color: white;
     &:hover {
-      background-color: #eb7979;
+      background-color: ;
       border-color: #f26767;
       box-shadow: none;
     }

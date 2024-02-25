@@ -16,13 +16,13 @@ const SidebarContainer = styled.div`
   color: #1f294d;
   width: 250px;
   height: 100%;
-  padding-top: 20px;
+  padding-top: 2px;
   //   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
 const SidebarUser = styled.div`
-  margin-top: 32vh;
+  margin-top: 30vh;
  
   //   display: flex;
   //   flex-direction: column;

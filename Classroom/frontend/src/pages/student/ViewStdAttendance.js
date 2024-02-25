@@ -148,44 +148,74 @@ const ViewStdAttendance = () => {
     };
 
     return (
-        <>
-            {loading
-                ? (
-                    <div>Loading...</div>
-                )
-                :
-                <div>
-                    {subjectAttendance && Array.isArray(subjectAttendance) && subjectAttendance.length > 0 ?
-                        <>
-                            {selectedSection === 'table' && renderTableSection()}
-                            {selectedSection === 'chart' && renderChartSection()}
-
-                            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-                                <BottomNavigation value={selectedSection} onChange={handleSectionChange} showLabels>
-                                    <BottomNavigationAction
-                                        label="Table"
-                                        value="table"
-                                        icon={selectedSection === 'table' ? <TableChartIcon /> : <TableChartOutlinedIcon />}
-                                    />
-                                    <BottomNavigationAction
-                                        label="Chart"
-                                        value="chart"
-                                        icon={selectedSection === 'chart' ? <InsertChartIcon /> : <InsertChartOutlinedIcon />}
-                                    />
-                                </BottomNavigation>
-                            </Paper>
-                        </>
-                        :
-                        <>
-                            <Typography variant="h6" gutterBottom component="div">
-                                Currently You Have No Attendance Details
-                            </Typography>
-                        </>
-                    }
-                </div>
-            }
-        </>
-    )
+      <>
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <div>
+            {subjectAttendance &&
+            Array.isArray(subjectAttendance) &&
+            subjectAttendance.length > 0 ? (
+              <>
+                {" "}
+                <Paper
+                  sx={{
+                    width: "95%",
+                    overflow: "hidden",
+                    margin: "40px",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minWidth: "min-content",
+                  }}
+                >
+                  {selectedSection === "table" && renderTableSection()}
+                  {selectedSection === "chart" && renderChartSection()}
+                </Paper>
+                <Paper
+                  sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+                  elevation={3}
+                >
+                  <BottomNavigation
+                    value={selectedSection}
+                    onChange={handleSectionChange}
+                    showLabels
+                  >
+                    <BottomNavigationAction
+                      label="Table"
+                      value="table"
+                      icon={
+                        selectedSection === "table" ? (
+                          <TableChartIcon />
+                        ) : (
+                          <TableChartOutlinedIcon />
+                        )
+                      }
+                    />
+                    <BottomNavigationAction
+                      label="Chart"
+                      value="chart"
+                      icon={
+                        selectedSection === "chart" ? (
+                          <InsertChartIcon />
+                        ) : (
+                          <InsertChartOutlinedIcon />
+                        )
+                      }
+                    />
+                  </BottomNavigation>
+                </Paper>
+              </>
+            ) : (
+              <>
+                <Typography variant="h6" gutterBottom component="div">
+                  Currently You Have No Attendance Details
+                </Typography>
+              </>
+            )}
+          </div>
+        )}
+      </>
+    );
 }
 
 export default ViewStdAttendance

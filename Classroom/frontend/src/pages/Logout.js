@@ -55,17 +55,17 @@ const LogoutButton = styled.button`
   margin-top: 10px;
   border-radius: 5px;
   font-size: 16px;
-  color: #fff;
+  color: "#21618C";
   cursor: pointer;
 
   &:hover {
     color: #fff;
-    background-color: #333;
+    background-color: "#21618C ;
   }
 `;
 
 const LogoutButtonLogout = styled(LogoutButton)`
-  background-color: #ea0606;
+  background-color: "#21618C";
 `;
 
 const LogoutButtonCancel = styled(LogoutButton)`
