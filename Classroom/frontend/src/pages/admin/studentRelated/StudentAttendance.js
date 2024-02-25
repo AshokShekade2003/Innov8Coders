@@ -52,7 +52,7 @@ const StudentAttendance = ({ situation }) => {
         if (date > currentDate) {
             alert("Cannot mark attendance for future dates")
             setError("Cannot mark attendance for future dates");
-            return false;
+            return false; 
         }
 
         setError("");
