@@ -294,9 +294,9 @@ const ViewStudent = () => {
                             })}
                         </TableBody>
                     </Table>
-                    <Button variant="contained" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/marks/" + studentID)}>
+                    {/* <Button variant="contained" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/marks/" + studentID)}>
                         Add Marks
-                    </Button>
+                    </Button> */}
                 </>
             )
         }
@@ -309,32 +309,27 @@ const ViewStudent = () => {
         }
         return (
             <>
-                {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0
-                    ?
-                    <>
-                        {selectedSection === 'table' && renderTableSection()}
-                        {selectedSection === 'chart' && renderChartSection()}
+                {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0 ? (
+  <>
+    {selectedSection === 'table' && renderTableSection()}
+    {selectedSection === 'chart' && renderChartSection()}
 
-                        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-                            <BottomNavigation value={selectedSection} onChange={handleSectionChange} showLabels>
-                                <BottomNavigationAction
-                                    label="Table"
-                                    value="table"
-                                    icon={selectedSection === 'table' ? <TableChartIcon /> : <TableChartOutlinedIcon />}
-                                />
-                                <BottomNavigationAction
-                                    label="Chart"
-                                    value="chart"
-                                    icon={selectedSection === 'chart' ? <InsertChartIcon /> : <InsertChartOutlinedIcon />}
-                                />
-                            </BottomNavigation>
-                        </Paper>
-                    </>
-                    :
-                    <Button variant="contained" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/marks/" + studentID)}>
-                        Add Marks
-                    </Button>
-                }
+    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+      <BottomNavigation value={selectedSection} onChange={handleSectionChange} showLabels>
+        <BottomNavigationAction
+          label="Table"
+          value="table"
+          icon={selectedSection === 'table' ? <TableChartIcon /> : <TableChartOutlinedIcon />}
+        />
+        <BottomNavigationAction
+          label="Chart"
+          value="chart"
+          icon={selectedSection === 'chart' ? <InsertChartIcon /> : <InsertChartOutlinedIcon />}
+        />
+      </BottomNavigation>
+    </Paper>
+  </>
+) : null}
             </>
         )
     }
