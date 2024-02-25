@@ -13,7 +13,6 @@ import { calculateOverallAttendancePercentage, calculateSubjectAttendancePercent
 import CustomBarChart from '../../../components/CustomBarChart'
 import CustomPieChart from '../../../components/CustomPieChart'
 import { StyledTableCell, StyledTableRow } from '../../../components/styles';
-
 import InsertChartIcon from '@mui/icons-material/InsertChart';
 import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 import TableChartIcon from '@mui/icons-material/TableChart';
@@ -102,13 +101,8 @@ const ViewStudent = () => {
     }
 
     const deleteHandler = () => {
-        setMessage("Sorry the delete function has been disabled for now.")
+        setMessage("Sorry, the delete function has been disabled for now.")
         setShowPopup(true)
-
-        // dispatch(deleteUser(studentID, address))
-        //     .then(() => {
-        //         navigate(-1)
-        //     })
     }
 
     const removeHandler = (id, deladdress) => {
@@ -143,8 +137,33 @@ const ViewStudent = () => {
         };
     });
 
-    const StudentAttendanceSection = () => {
-        const renderTableSection = () => {
+    const StudentDetailsAndAttendanceSection = () => {
+        const renderDetailsSection = () => {
+            return (
+                <div>
+                    Name: {userDetails.name}
+                    <br />
+                    Roll Number: {userDetails.rollNum}
+                    <br />
+                    Class: {sclassName.sclassName}
+                    <br />
+                    School: {studentSchool.schoolName}
+                    {
+                        subjectAttendance && Array.isArray(subjectAttendance) && subjectAttendance.length > 0 && (
+                            <CustomPieChart data={chartData} />
+                        )
+                    }
+                    <Button variant="contained" sx={styles.styledButton} onClick={deleteHandler}>
+                        Delete
+                    </Button>
+                    <br />
+                    <br />
+                    <br />
+                </div>
+            );
+        }
+
+        const renderAttendanceSection = () => {
             return (
                 <>
                     <h3>Attendance:</h3>
@@ -172,9 +191,15 @@ const ViewStudent = () => {
                                                 onClick={() => handleOpen(subId)}>
                                                 {openStates[subId] ? <KeyboardArrowUp /> : <KeyboardArrowDown />}Details
                                             </Button>
-                                            <IconButton onClick={() => removeSubAttendance(subId)}>
-                                                <DeleteIcon color="error" />
-                                            </IconButton>
+                                            <Button variant="contained" color="error" onClick={() => removeSubAttendance(subId)} sx={{
+        ...styles.attendanceButton,
+        backgroundColor: '#d32f2f', // Error red color
+        '&:hover': {
+            backgroundColor: '#b71c1c', // Darker shade on hover
+        },
+    }}>
+                                                Delete
+                                            </Button>
                                             <Button variant="contained" sx={styles.attendanceButton}
                                                 onClick={() => navigate(`/Admin/subject/student/attendance/${studentID}/${subId}`)}>
                                                 Change
@@ -219,9 +244,11 @@ const ViewStudent = () => {
                         }
                         )}
                     </Table>
+                    <br/>
                     <div>
                         Overall Attendance Percentage: {overallAttendancePercentage.toFixed(2)}%
                     </div>
+                    <br />
                     <Button variant="contained" color="error" startIcon={<DeleteIcon />} onClick={() => removeHandler(studentID, "RemoveStudentAtten")}>Delete All</Button>
                     <Button variant="contained" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/attendance/" + studentID)}>
                         Add Attendance
@@ -229,43 +256,13 @@ const ViewStudent = () => {
                 </>
             )
         }
-        const renderChartSection = () => {
-            return (
-                <>
-                    <CustomBarChart chartData={subjectData} dataKey="attendancePercentage" />
-                </>
-            )
-        }
+
         return (
             <>
-                {subjectAttendance && Array.isArray(subjectAttendance) && subjectAttendance.length > 0
-                    ?
-                    <>
-                        {selectedSection === 'table' && renderTableSection()}
-                        {selectedSection === 'chart' && renderChartSection()}
-
-                        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-                            <BottomNavigation value={selectedSection} onChange={handleSectionChange} showLabels>
-                                <BottomNavigationAction
-                                    label="Table"
-                                    value="table"
-                                    icon={selectedSection === 'table' ? <TableChartIcon /> : <TableChartOutlinedIcon />}
-                                />
-                                <BottomNavigationAction
-                                    label="Chart"
-                                    value="chart"
-                                    icon={selectedSection === 'chart' ? <InsertChartIcon /> : <InsertChartOutlinedIcon />}
-                                />
-                            </BottomNavigation>
-                        </Paper>
-                    </>
-                    :
-                    <Button variant="contained" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/attendance/" + studentID)}>
-                        Add Attendance
-                    </Button>
-                }
+                {renderDetailsSection()}
+                {renderAttendanceSection()}
             </>
-        )
+        );
     }
 
     const StudentMarksSection = () => {
@@ -298,19 +295,23 @@ const ViewStudent = () => {
                         Add Marks
                     </Button>
                 </>
-            )
+            );
         }
+
         const renderChartSection = () => {
             return (
                 <>
                     <CustomBarChart chartData={subjectMarks} dataKey="marksObtained" />
                 </>
-            )
+            );
         }
+
         return (
             <>
-                {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0
-                    ?
+
+                {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0 ? (
+
+
                     <>
                         {selectedSection === 'table' && renderTableSection()}
                         {selectedSection === 'chart' && renderChartSection()}
@@ -330,112 +331,45 @@ const ViewStudent = () => {
                             </BottomNavigation>
                         </Paper>
                     </>
-                    :
-                    <Button variant="contained" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/marks/" + studentID)}>
-                        Add Marks
-                    </Button>
-                }
+                ) : null}
             </>
-        )
-    }
-
-    const StudentDetailsSection = () => {
-        return (
-            <div>
-                Name: {userDetails.name}
-                <br />
-                Roll Number: {userDetails.rollNum}
-                <br />
-                Class: {sclassName.sclassName}
-                <br />
-                School: {studentSchool.schoolName}
-                {
-                    subjectAttendance && Array.isArray(subjectAttendance) && subjectAttendance.length > 0 && (
-                        <CustomPieChart data={chartData} />
-                    )
-                }
-                <Button variant="contained" sx={styles.styledButton} onClick={deleteHandler}>
-                    Delete
-                </Button>
-                <br />
-                {/* <Button variant="contained" sx={styles.styledButton} className="show-tab" onClick={() => { setShowTab(!showTab) }}>
-                    {
-                        showTab
-                            ? <KeyboardArrowUp />
-                            : <KeyboardArrowDown />
-                    }
-                    Edit Student
-                </Button>
-                <Collapse in={showTab} timeout="auto" unmountOnExit>
-                    <div className="register">
-                        <form className="registerForm" onSubmit={submitHandler}>
-                            <span className="registerTitle">Edit Details</span>
-                            <label>Name</label>
-                            <input className="registerInput" type="text" placeholder="Enter user's name..."
-                                value={name}
-                                onChange={(event) => setName(event.target.value)}
-                                autoComplete="name" required />
-
-                            <label>Roll Number</label>
-                            <input className="registerInput" type="number" placeholder="Enter user's Roll Number..."
-                                value={rollNum}
-                                onChange={(event) => setRollNum(event.target.value)}
-                                required />
-
-                            <label>Password</label>
-                            <input className="registerInput" type="password" placeholder="Enter user's password..."
-                                value={password}
-                                onChange={(event) => setPassword(event.target.value)}
-                                autoComplete="new-password" />
-
-                            <button className="registerButton" type="submit" >Update</button>
-                        </form>
-                    </div>
-                </Collapse> */}
-            </div>
-        )
+        );
     }
 
     return (
         <>
-            {loading
-                ?
+            {loading ? (
                 <>
                     <div>Loading...</div>
                 </>
-                :
+            ) : (
                 <>
                     <Box sx={{ width: '100%', typography: 'body1', }} >
                         <TabContext value={value}>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                 <TabList onChange={handleChange} sx={{ position: 'fixed', width: '100%', bgcolor: 'background.paper', zIndex: 1 }}>
-                                    <Tab label="Details" value="1" />
-                                    <Tab label="Attendance" value="2" />
-                                    <Tab label="Marks" value="3" />
+                                    <Tab label="Attendance Details" value="1" />
+                                    <Tab label="Marks" value="2" />
                                 </TabList>
                             </Box>
                             <Container sx={{ marginTop: "3rem", marginBottom: "4rem" }}>
                                 <TabPanel value="1">
-                                    <StudentDetailsSection />
+                                    <StudentDetailsAndAttendanceSection />
                                 </TabPanel>
                                 <TabPanel value="2">
-                                    <StudentAttendanceSection />
-                                </TabPanel>
-                                <TabPanel value="3">
                                     <StudentMarksSection />
                                 </TabPanel>
                             </Container>
                         </TabContext>
                     </Box>
                 </>
-            }
+            )}
             <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
-
         </>
-    )
+    );
 }
 
-export default ViewStudent
+export default ViewStudent;
 
 const styles = {
     attendanceButton: {
@@ -452,4 +386,4 @@ const styles = {
             backgroundColor: "#106312",
         }
     }
-}
+};

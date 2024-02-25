@@ -40,8 +40,12 @@ const LogoutContainer = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-  background-color: #85769f66;
+  background-color: #95B9C7;
   color: black;
+  width: 80%; /* Adjust the width as needed */
+  max-width: 400px; /* Optionally, set a maximum width */
+  margin: auto; /* Center the container horizontally */
+  margin-top: 10vh; /* Center the container vertically */
 `;
 
 const LogoutMessage = styled.p`
@@ -55,19 +59,19 @@ const LogoutButton = styled.button`
   margin-top: 10px;
   border-radius: 5px;
   font-size: 16px;
-  color: #fff;
+ 
   cursor: pointer;
 
   &:hover {
     color: #fff;
-    background-color: #333;
+    background-color: #ea0606;
   }
 `;
 
 const LogoutButtonLogout = styled(LogoutButton)`
-  background-color: #ea0606;
+  background-color: #F5F5F5;
 `;
 
 const LogoutButtonCancel = styled(LogoutButton)`
-  background-color: rgb(99, 60, 99);
+  background-color: #F5F5F5;
 `;

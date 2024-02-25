@@ -8,6 +8,25 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import AnnouncementOutlinedIcon from '@mui/icons-material/AnnouncementOutlined';
 import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined';
 import { useSelector } from 'react-redux';
+import styled from "styled-components";
+
+const SidebarContainer = styled.div`
+  color: #1f294d;
+  width: 250px;
+  height: 100%;
+  padding-top: 2px;
+  //   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+const SidebarUser = styled.div`
+  margin-top: 59vh;
+ 
+  //   display: flex;
+  //   flex-direction: column;
+  //   position: absolute;
+  //   padding-bottom: 17px;
+`;
 
 const TeacherSideBar = () => {
     const { currentUser } = useSelector((state) => state.user);
@@ -16,6 +35,7 @@ const TeacherSideBar = () => {
     const location = useLocation();
     return (
         <>
+            <SidebarContainer> 
             <React.Fragment>
                 <ListItemButton component={Link} to="/">
                     <ListItemIcon>
@@ -37,10 +57,11 @@ const TeacherSideBar = () => {
                 </ListItemButton>
             </React.Fragment>
             <Divider sx={{ my: 1 }} />
+            <SidebarUser> 
             <React.Fragment>
-                <ListSubheader component="div" inset>
+                {/* <ListSubheader component="div" inset>
                     User
-                </ListSubheader>
+                </ListSubheader> */}
                 <ListItemButton component={Link} to="/Teacher/profile">
                     <ListItemIcon>
                         <AccountCircleOutlinedIcon color={location.pathname.startsWith("/Teacher/profile") ? 'primary' : 'inherit'} />
@@ -54,6 +75,8 @@ const TeacherSideBar = () => {
                     <ListItemText primary="Logout" />
                 </ListItemButton>
             </React.Fragment>
+            </SidebarUser>
+            </SidebarContainer>
         </>
     )
 }

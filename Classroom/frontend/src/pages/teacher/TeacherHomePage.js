@@ -6,6 +6,8 @@ import Students from "../../assets/img1.png";
 import Lessons from "../../assets/subjects.svg";
 import Tests from "../../assets/assignment.svg";
 import Time from "../../assets/time.svg";
+import Upload from "./Upload";
+
 import { getClassStudents, getSubjectDetails } from '../../redux/sclassRelated/sclassHandle';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -71,6 +73,8 @@ const TeacherHomePage = () => {
                             <SeeNotice />
                         </Paper>
                     </Grid>
+                   
+                   <Upload/>
                 </Grid>
             </Container>
         </>
@@ -85,15 +89,26 @@ const StyledPaper = styled(Paper)`
   justify-content: space-between;
   align-items: center;
   text-align: center;
+  transition: background-color 0.3s ease;
+  border-radius: 90px;
+
+  &:hover {
+    
+    transform: scale(1.05);
+    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.1);
+  }
 `;
 
 const Title = styled.p`
-  font-size: 1.25rem;
+  font-size: 1.3rem;
+  margin-bottom: 3px;
+  font-weight: bold;
+  color: #333;
 `;
 
 const Data = styled(CountUp)`
-  font-size: calc(1.3rem + .6vw);
-  color: green;
+  font-size: calc(1.3rem +0.6vw);
 `;
+
 
 export default TeacherHomePage

@@ -9,6 +9,7 @@ import SeeNotice from '../../components/SeeNotice';
 import CountUp from 'react-countup';
 import Subject from "../../assets/subjects.svg";
 import Assignment from "../../assets/assignment.svg";
+import Showpdf from "./Showpdf";
 import { getSubjectList } from '../../redux/sclassRelated/sclassHandle';
 
 const StudentHomePage = () => {
@@ -97,6 +98,7 @@ const StudentHomePage = () => {
                         </Paper>
                     </Grid>
                 </Grid>
+                <Showpdf></Showpdf>
             </Container>
         </>
     )
@@ -116,20 +118,30 @@ const StyledPaper = styled(Paper)`
   padding: 16px;
   display: flex;
   flex-direction: column;
-  height: 200px;
+  height: 250px;
   justify-content: space-between;
   align-items: center;
   text-align: center;
+  transition: background-color 0.3s ease;
+  border-radius: 90px;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.1);
+  }
 `;
 
 const Title = styled.p`
-  font-size: 1.25rem;
+  font-size: 1.3rem;
+  margin-bottom: 3px;
+  font-weight: bold;
+  color: #333;
 `;
 
 const Data = styled(CountUp)`
-  font-size: calc(1.3rem + .6vw);
-  color: green;
+  font-size: calc(1.3rem + 0.6vw);
 `;
+
 
 
 
