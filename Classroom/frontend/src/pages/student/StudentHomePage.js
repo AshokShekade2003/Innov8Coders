@@ -9,6 +9,7 @@ import SeeNotice from '../../components/SeeNotice';
 import CountUp from 'react-countup';
 import Subject from "../../assets/subjects.svg";
 import Assignment from "../../assets/assignment.svg";
+import Showpdf from "./Showpdf";
 import { getSubjectList } from '../../redux/sclassRelated/sclassHandle';
 
 const StudentHomePage = () => {
@@ -97,6 +98,7 @@ const StudentHomePage = () => {
                         </Paper>
                     </Grid>
                 </Grid>
+                <Showpdf></Showpdf>
             </Container>
         </>
     )

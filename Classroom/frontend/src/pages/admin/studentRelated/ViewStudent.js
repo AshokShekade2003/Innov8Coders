@@ -308,7 +308,10 @@ const ViewStudent = () => {
 
         return (
             <>
+
                 {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0 ? (
+
+
                     <>
                         {selectedSection === 'table' && renderTableSection()}
                         {selectedSection === 'chart' && renderChartSection()}
