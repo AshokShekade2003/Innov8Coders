@@ -21,6 +21,7 @@ const AddStudent = ({ situation }) => {
     const [password, setPassword] = useState('')
     const [className, setClassName] = useState('')
     const [sclassName, setSclassName] = useState('')
+    const [semail, setSemail] = useState('')
 
     const adminID = currentUser._id
     const role = "Student"
@@ -53,7 +54,7 @@ const AddStudent = ({ situation }) => {
         }
     }
 
-    const fields = { name, rollNum, password, sclassName, adminID, role, attendance }
+    const fields = { name, rollNum, password, sclassName, adminID, role, attendance,semail }
 
     const submitHandler = (event) => {
         event.preventDefault()
@@ -117,6 +118,12 @@ const AddStudent = ({ situation }) => {
                     <input className="registerInput" type="number" placeholder="Enter student's Roll Number..."
                         value={rollNum}
                         onChange={(event) => setRollNum(event.target.value)}
+                        required />
+
+                    <label>email</label>
+                    <input className="registerInput" type="email" placeholder="Enter student's Email ID..."
+                        value={semail}
+                        onChange={(event) => setSemail(event.target.value)}
                         required />
 
                     <label>Password</label>

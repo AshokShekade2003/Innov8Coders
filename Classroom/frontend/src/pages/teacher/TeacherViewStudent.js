@@ -173,32 +173,34 @@ const TeacherViewStudent = () => {
 
                     {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0 &&
                         <>
-                            {subjectMarks.map((result, index) => {
-                                if (result.subName.subName === teachSubject) {
-                                    return (
-                                        <Table key={index}>
-                                            <TableHead>
-                                                <StyledTableRow>
-                                                    <StyledTableCell>Subject</StyledTableCell>
-                                                    <StyledTableCell>Marks</StyledTableCell>
-                                                </StyledTableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                <StyledTableRow>
-                                                    <StyledTableCell>{result.subName.subName}</StyledTableCell>
+                            <Table>
+                                <TableHead>
+                                    <StyledTableRow>
+                                        <StyledTableCell>#</StyledTableCell>
+                                        <StyledTableCell>Subject - Test</StyledTableCell>
+                                        <StyledTableCell>Marks</StyledTableCell>
+                                    </StyledTableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {subjectMarks.map((result, index) => {
+                                        if (result.subName.subName === teachSubject) {
+                                            return (
+                                                <StyledTableRow key={index}>
+                                                    <StyledTableCell>{index + 1}</StyledTableCell>
+                                                    <StyledTableCell>{`${result.subName.subName}`}</StyledTableCell>
                                                     <StyledTableCell>{result.marksObtained}</StyledTableCell>
                                                 </StyledTableRow>
-                                            </TableBody>
-                                        </Table>
-                                    )
-                                }
-                                else if (!result.subName || !result.marksObtained) {
-                                    return null;
-                                }
-                                return null
-                            })}
+                                            );
+                                        } else if (!result.subName || !result.marksObtained) {
+                                            return null;
+                                        }
+                                        return null;
+                                    })}
+                                </TableBody>
+                            </Table>
                         </>
                     }
+
                     <PurpleButton variant="contained"
                         onClick={() =>
                             navigate(

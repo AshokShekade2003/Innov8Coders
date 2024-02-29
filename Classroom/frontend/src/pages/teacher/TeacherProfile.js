@@ -1,13 +1,25 @@
+// TeacherProfile.js
 import React from 'react';
 import styled from 'styled-components';
 import { Card, CardContent, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setTeacherID } from '../../redux/teacherRelated/setTeacherId';
+import { useEffect } from "react";
+
 
 const TeacherProfile = () => {
+  const dispatch = useDispatch();
   const { currentUser, response, error } = useSelector((state) => state.user);
-
+  
   if (response) { console.log(response) }
   else if (error) { console.log(error) }
+  
+ // const teacherID = currentUser._id; // Assuming the teacher ID is stored in the currentUser objects
+  useEffect(() => {
+      if (currentUser && currentUser._id) {
+        dispatch(setTeacherID(currentUser._id));
+      }
+  }, [dispatch, currentUser]);
 
   const teachSclass = currentUser.teachSclass
   const teachSubject = currentUser.teachSubject
@@ -25,6 +37,7 @@ const TeacherProfile = () => {
             <ProfileText>Class: {teachSclass.sclassName}</ProfileText>
             <ProfileText>Subject: {teachSubject.subName}</ProfileText>
             <ProfileText>School: {teachSchool.schoolName}</ProfileText>
+            <ProfileText>Teacher ID: {currentUser._id}</ProfileText> {/* Displaying the teacher_id */}
           </ProfileText>
         </ProfileCardContent>
       </ProfileCard>

@@ -331,7 +331,6 @@ const ViewStudent = () => {
                             </BottomNavigation>
                         </Paper>
                     </>
-
                 ) : null}
             </>
         );
