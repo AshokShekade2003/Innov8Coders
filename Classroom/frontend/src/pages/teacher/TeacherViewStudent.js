@@ -168,6 +168,7 @@ const TeacherViewStudent = () => {
                     >
                         Add Attendance
                     </Button>
+                    
                     <br /><br /><br />
                     <h3>Subject Marks:</h3>
 
