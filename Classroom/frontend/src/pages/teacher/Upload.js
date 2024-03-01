@@ -74,9 +74,10 @@ function Upload() {
           <input
             type="text"
             className="form-control"
-            placeholder="Title"
+            placeholder="Title...."
             value={title}
             onChange={handleTitleChange}
+            style={{ width: "450px", padding: "10px", fontSize: "20px" }}
             required
           />
         </div>
@@ -86,11 +87,12 @@ function Upload() {
             className="form-control"
             accept="application/pdf"
             onChange={handleFileChange}
+            style={{ width: "350px", padding: "10px", fontSize: "15px" }}
             required
           />
         </div>
         <div className="form-group">
-          <button className="btn btn-primary" type="submit">
+          <button className="showbtn" type="submit">
             Submit
           </button>
         </div>
@@ -115,7 +117,7 @@ function Upload() {
                     <div className="inner-div" key={index}>
                       <h6>Title: {data.title}</h6>
                       <button
-                        className="btn btn-primary"
+                        className="showbtn"
                         onClick={() => showPdf(data.pdf)}
                       >
                         Show Pdf
