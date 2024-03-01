@@ -157,11 +157,11 @@ const updateExamResult = async (req, res) => {
             (result) => result.subName.toString() === subName
         );
 
-        if (existingResult) {
-            existingResult.marksObtained = marksObtained;
-        } else {
+        // if (existingResult) {
+        //     existingResult.marksObtained = marksObtained;
+        // } else {
             student.examResult.push({ subName, marksObtained });
-        }
+        // }
 
         const result = await student.save();
         return res.send(result);

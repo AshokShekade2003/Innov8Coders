@@ -74,9 +74,9 @@ function Showpdf() {
                   // Check if the user field value is equal to "123"
                   data.user === currentUser.sclassName._id && (
                     <div className="inner-div" key={index}>
-                      <h6>Title: {data.title}</h6>
+                      <h5>Title: {data.title}</h5>
                       <button
-                        className="btn btn-primary"
+                        className="showbtn"
                         onClick={() => showPdf(data.pdf)}
                       >
                         Show Pdf

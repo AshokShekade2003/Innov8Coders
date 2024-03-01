@@ -206,7 +206,10 @@ const ClassDetails = () => {
     const ClassTeachersSection = () => {
         return (
             <>
-                Teachers
+               <h4>physics: Ashok</h4>
+               <h4>Chemistry: omkumar</h4>
+               <h4>math: mahesh</h4>
+               <h4>Biology: Prathmesh</h4>
             </>
         )
     }

@@ -6,7 +6,7 @@ import Students from "../../assets/img1.png";
 import Lessons from "../../assets/subjects.svg";
 import Tests from "../../assets/assignment.svg";
 import Time from "../../assets/time.svg";
-import Upload from "./Upload";
+
 
 import { getClassStudents, getSubjectDetails } from '../../redux/sclassRelated/sclassHandle';
 import { useDispatch, useSelector } from 'react-redux';
@@ -74,7 +74,6 @@ const TeacherHomePage = () => {
                         </Paper>
                     </Grid>
                    
-                   <Upload/>
                 </Grid>
             </Container>
         </>
@@ -107,7 +106,9 @@ const Title = styled.p`
 `;
 
 const Data = styled(CountUp)`
-  font-size: calc(1.3rem +0.6vw);
+  font-size: calc(
+    1.2rem + 0.6vw
+  ); /* Adjust the base font size and scaling factor as needed */
 `;
 
 

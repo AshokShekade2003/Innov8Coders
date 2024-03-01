@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSubjectList } from '../../redux/sclassRelated/sclassHandle';
 import { BottomNavigation, BottomNavigationAction, Container, Paper, Table, TableBody, TableHead, Typography } from '@mui/material';
@@ -12,29 +12,29 @@ import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
 import { StyledTableCell, StyledTableRow } from '../../components/styles';
 
 const StudentSubjects = () => {
-
     const dispatch = useDispatch();
     const { subjectsList, sclassDetails } = useSelector((state) => state.sclass);
     const { userDetails, currentUser, loading, response, error } = useSelector((state) => state.user);
 
     useEffect(() => {
         dispatch(getUserDetails(currentUser._id, "Student"));
-    }, [dispatch, currentUser._id])
+    }, [dispatch, currentUser._id]);
 
     if (response) { console.log(response) }
     else if (error) { console.log(error) }
 
     const [subjectMarks, setSubjectMarks] = useState([]);
     const [selectedSection, setSelectedSection] = useState('table');
+    const [selectedSubject, setSelectedSubject] = useState('');
 
     useEffect(() => {
         if (userDetails) {
             setSubjectMarks(userDetails.examResult || []);
         }
-    }, [userDetails])
+    }, [userDetails]);
 
     useEffect(() => {
-        if (subjectMarks === []) {
+        if (subjectMarks.length === 0) {
             dispatch(getSubjectList(currentUser.sclassName._id, "ClassSubjects"));
         }
     }, [subjectMarks, dispatch, currentUser.sclassName._id]);
@@ -43,11 +43,38 @@ const StudentSubjects = () => {
         setSelectedSection(newSection);
     };
 
-    const renderTableSection = () => {
+    const handleSubjectChange = (event) => {
+        setSelectedSubject(event.target.value);
+    };
+
+    const filteredSubjectMarks = subjectMarks.filter((result) => {
+        return selectedSubject ? result.subName.subName === selectedSubject : true;
+    });
+
+    const renderSubjectDropdown = () => {
+        return (
+            <div>
+                <Typography variant="h6" gutterBottom>
+                    Select Subject:
+                </Typography>
+                <select value={selectedSubject} onChange={handleSubjectChange}>
+                    <option value="">All Subjects</option>
+                    {subjectsList &&
+                        subjectsList.map((subject, index) => (
+                            <option key={index} value={subject.subName}>
+                                {subject.subName} ({subject.subCode})
+                            </option>
+                        ))}
+                </select>
+            </div>
+        );
+    };
+
+    const renderFilteredTableSection = () => {
         return (
             <>
                 <Typography variant="h4" align="center" gutterBottom>
-                    Subject Marks
+                    {selectedSubject ? `${selectedSubject} Marks` : 'Subject Marks'}
                 </Typography>
                 <Table>
                     <TableHead>
@@ -57,7 +84,7 @@ const StudentSubjects = () => {
                         </StyledTableRow>
                     </TableHead>
                     <TableBody>
-                        {subjectMarks.map((result, index) => {
+                        {filteredSubjectMarks.map((result, index) => {
                             if (!result.subName || !result.marksObtained) {
                                 return null;
                             }
@@ -74,8 +101,8 @@ const StudentSubjects = () => {
         );
     };
 
-    const renderChartSection = () => {
-        return <CustomBarChart chartData={subjectMarks} dataKey="marksObtained" />;
+    const renderFilteredChartSection = () => {
+        return <CustomBarChart chartData={filteredSubjectMarks} dataKey="marksObtained" />;
     };
 
     const renderClassDetailsSection = () => {
@@ -103,68 +130,69 @@ const StudentSubjects = () => {
     };
 
     return (
-      <>
-        {loading ? (
-          <div>Loading...</div>
-        ) : (
-          <div>
-            {subjectMarks &&
-            Array.isArray(subjectMarks) &&
-            subjectMarks.length > 0 ? (
-              <>
-                <Paper
-                  sx={{
-                    width: "95%",
-                    overflow: "hidden",
-                    margin: "40px",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    minWidth: "min-content",
-                  }}
-                >
-                  {selectedSection === "table" && renderTableSection()}
-                  {selectedSection === "chart" && renderChartSection()}
-                </Paper>
-                <Paper
-                  sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
-                  elevation={3}
-                >
-                  <BottomNavigation
-                    value={selectedSection}
-                    onChange={handleSectionChange}
-                    showLabels
-                  >
-                    <BottomNavigationAction
-                      label="Table"
-                      value="table"
-                      icon={
-                        selectedSection === "table" ? (
-                          <TableChartIcon />
-                        ) : (
-                          <TableChartOutlinedIcon />
-                        )
-                      }
-                    />
-                    <BottomNavigationAction
-                      label="Chart"
-                      value="chart"
-                      icon={
-                        selectedSection === "chart" ? (
-                          <InsertChartIcon />
-                        ) : (
-                          <InsertChartOutlinedIcon />
-                        )
-                      }
-                    />
-                  </BottomNavigation>
-                </Paper>
-              </>
+        <>
+            {loading ? (
+                <div>Loading...</div>
             ) : (
-              <>{renderClassDetailsSection()}</>
+                <div>
+                    {subjectMarks &&
+                        Array.isArray(subjectMarks) &&
+                        subjectMarks.length > 0 ? (
+                            <>
+                                {renderSubjectDropdown()}
+                                <Paper
+                                    sx={{
+                                        width: "95%",
+                                        overflow: "hidden",
+                                        margin: "40px",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        minWidth: "min-content",
+                                    }}
+                                >
+                                    {selectedSection === "table" && renderFilteredTableSection()}
+                                    {selectedSection === "chart" && renderFilteredChartSection()}
+                                </Paper>
+                                <Paper
+                                    sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+                                    elevation={3}
+                                >
+                                    <BottomNavigation
+                                        value={selectedSection}
+                                        onChange={handleSectionChange}
+                                        showLabels
+                                    >
+                                        <BottomNavigationAction
+                                            label="Table"
+                                            value="table"
+                                            icon={
+                                                selectedSection === "table" ? (
+                                                    <TableChartIcon />
+                                                ) : (
+                                                    <TableChartOutlinedIcon />
+                                                )
+                                            }
+                                        />
+                                        <BottomNavigationAction
+                                            label="Chart"
+                                            value="chart"
+                                            icon={
+                                                selectedSection === "chart" ? (
+                                                    <InsertChartIcon />
+                                                ) : (
+                                                    <InsertChartOutlinedIcon />
+                                                )
+                                            }
+                                        />
+                                    </BottomNavigation>
+                                </Paper>
+                            </>
+                        ) : (
+                            <>{renderClassDetailsSection()}</>
+                        )}
+                </div>
             )}
-          </div>
-        )}
-      </>
+        </>
     );
 };
 

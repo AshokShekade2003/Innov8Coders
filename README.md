@@ -35,6 +35,7 @@
     <pre><code>git clone https://github.com/AshokShekade2003/Innov8Coders_ClassConnect.git</code></pre>
     <li>Navigate to the project directory:</li>
     <pre><code>cd school-management-system</code></pre>
+    <li>Navigate to backend folder and create .env file. Go to MongoDB Compass/Atlas in your device and create a database and take its connection link and put it in the .env file:</li>
     <li>Install backend dependencies and start the server:</li>
     <pre><code>cd backend</code></pre>
     <pre><code>npm install</code></pre>
@@ -46,7 +47,8 @@
     <pre><code>npm start</code></pre>
     <li>Access the application in your browser at <code>localhost:3000</code>.</li>
   </ol>
-
+ <h2>Watch the Demonstration</h2>
+  <p>Check out the demonstration video on YouTube: <a href="https://youtu.be/eZN1yq1v9E8?si=E40TIK8uOMDMWETN" target="_blank">Click here to watch</a></p>
   <h2>Additional Notes</h2>
   <ul>
     <li>The project includes a homepage with login options for admin, teacher, and student, providing secure access to different functionalities based on user roles.</li>

@@ -12,6 +12,8 @@ import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 import TableChartIcon from '@mui/icons-material/TableChart';
 import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
 import { StyledTableCell, StyledTableRow } from '../../components/styles';
+import CustomPieChart from '../../components/CustomPieChart';
+import styled from 'styled-components';
 
 const ViewStdAttendance = () => {
     const dispatch = useDispatch();
@@ -61,6 +63,14 @@ const ViewStdAttendance = () => {
         setSelectedSection(newSection);
     };
 
+    //const overallAttendancePercentage = calculateOverallAttendancePercentage(subjectAttendance);
+    const overallAbsentPercentage = 100 - overallAttendancePercentage;
+
+
+    const chartData = [
+      { name: 'Present', value: overallAttendancePercentage },
+      { name: 'Absent', value: overallAbsentPercentage }
+    ];
     const renderTableSection = () => {
         return (
             <>
@@ -135,6 +145,63 @@ const ViewStdAttendance = () => {
                 <div>
                     Overall Attendance Percentage: {overallAttendancePercentage.toFixed(2)}%
                 </div>
+                <br/>
+                <br/>
+                
+                <br/>
+                <br/>
+                <Typography variant="h6" gutterBottom component="div" style={{marginLeft: 25}}>
+                                                    Attendance Percentage
+                                                </Typography>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <div> 
+                 
+                 <ChartContainer>
+                            {
+                                response ?
+                                    <Typography variant="h6">No Attendance Found</Typography>
+                                    :
+                                    <>
+                                        {loading
+                                            ? (
+                                                <Typography variant="h6">Loading...</Typography>
+                                            )
+                                            :
+                                            <>
+                                                {
+                                                    subjectAttendance && Array.isArray(subjectAttendance) && subjectAttendance.length > 0 ? (
+                                                        <>
+                                                            <CustomPieChart data={chartData} />
+                                                        </>
+                                                    )
+                                                        :
+                                                        <Typography variant="h6">No Attendance Found</Typography>
+                                                }
+                                            </>
+                                        }
+                                    </>
+                            }
+                        </ChartContainer>
+                        </div>
+                        <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
             </>
         )
     }
@@ -217,5 +284,14 @@ const ViewStdAttendance = () => {
       </>
     );
 }
+const ChartContainer = styled.div`
+  padding: 2px;
+  display: flex;
+  flex-direction: column;
+  height: 240px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
 
 export default ViewStdAttendance
