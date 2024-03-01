@@ -2,12 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetails } from '../../redux/userRelated/userHandle';
 import { useNavigate, useParams } from 'react-router-dom'
-import { Box, Button, Collapse, Table, TableBody, TableHead, Typography } from '@mui/material';
-import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
+import { Box, Button, Collapse, Table, TableBody, TableHead, Typography, Container, Tab, IconButton, Paper, BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { KeyboardArrowDown, KeyboardArrowUp, Delete as DeleteIcon } from '@mui/icons-material';
 import { calculateOverallAttendancePercentage, calculateSubjectAttendancePercentage, groupAttendanceBySubject } from '../../components/attendanceCalculator';
 import CustomPieChart from '../../components/CustomPieChart'
 import { PurpleButton } from '../../components/buttonStyles';
 import { StyledTableCell, StyledTableRow } from '../../components/styles';
+
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import { updateStudentFields } from '../../redux/studentRelated/studentHandle';
+import InsertChartIcon from '@mui/icons-material/InsertChart';
+import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
+import TableChartIcon from '@mui/icons-material/TableChart';
+import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
+import { removeStuff } from '../../redux/studentRelated/studentHandle';
+import CustomBarChart from '../../components/CustomBarChart';
 
 const TeacherViewStudent = () => {
 
@@ -32,6 +43,10 @@ const TeacherViewStudent = () => {
     const [studentSchool, setStudentSchool] = useState('');
     const [subjectMarks, setSubjectMarks] = useState('');
     const [subjectAttendance, setSubjectAttendance] = useState([]);
+    //
+    const [showPopup, setShowPopup] = useState(false);
+    const [message, setMessage] = useState("");
+    //
 
     const [openStates, setOpenStates] = useState({});
 
@@ -59,15 +74,42 @@ const TeacherViewStudent = () => {
         { name: 'Absent', value: overallAbsentPercentage }
     ];
 
-    return (
-        <>
-            {loading
-                ?
-                <>
-                    <div>Loading...</div>
-                </>
-                :
+    //
+    const [value, setValue] = useState('1');
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    const removeHandler = (id, deladdress) => {
+        dispatch(removeStuff(id, deladdress))
+            .then(() => {
+                dispatch(getUserDetails(studentID, address));
+            })
+    }
+    
+    const deleteHandler = () => {
+        setMessage("Sorry, the delete function has been disabled for now.")
+        setShowPopup(true)
+    }
+    const removeSubAttendance = (subId) => {
+        dispatch(updateStudentFields(studentID, { subId }, "RemoveStudentSubAtten"))
+            .then(() => {
+                dispatch(getUserDetails(studentID, address));
+            })
+    }
+
+    const [selectedSection, setSelectedSection] = useState('table');
+    const handleSectionChange = (event, newSection) => {
+        setSelectedSection(newSection);
+    };
+
+    const StudentDetailsAndAttendanceSection = () => {
+        const renderDetailsSection = () => {
+            return (
                 <div>
+
+                    {/* ll  */}
                     Name: {userDetails.name}
                     <br />
                     Roll Number: {userDetails.rollNum}
@@ -170,46 +212,136 @@ const TeacherViewStudent = () => {
                     </Button>
                     
                     <br /><br /><br />
-                    <h3>Subject Marks:</h3>
+                  
+        
+                </div>
+            );
+        }
+        console.log('teachSubjectID:', teachSubjectID);
+        console.log('subjectAttendance:', subjectAttendance);
+        
+        const renderAttendanceSection = () => {
+            return (
+                <>
+                    
+                </>
+            )
+        }
 
-                    {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0 &&
-                        <>
-                            <Table>
-                                <TableHead>
-                                    <StyledTableRow>
-                                        <StyledTableCell>#</StyledTableCell>
-                                        <StyledTableCell>Subject - Test</StyledTableCell>
-                                        <StyledTableCell>Marks</StyledTableCell>
-                                    </StyledTableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {subjectMarks.map((result, index) => {
-                                        if (result.subName.subName === teachSubject) {
-                                            return (
-                                                <StyledTableRow key={index}>
-                                                    <StyledTableCell>{index + 1}</StyledTableCell>
-                                                    <StyledTableCell>{`${result.subName.subName}`}</StyledTableCell>
-                                                    <StyledTableCell>{result.marksObtained}</StyledTableCell>
-                                                </StyledTableRow>
-                                            );
-                                        } else if (!result.subName || !result.marksObtained) {
-                                            return null;
-                                        }
-                                        return null;
-                                    })}
-                                </TableBody>
-                            </Table>
-                        </>
-                    }
+        return (
+            <>
+                {renderDetailsSection()}
+                {renderAttendanceSection()}
+            </>
+        );
+    }
+    //
 
-                    <PurpleButton variant="contained"
+    const StudentMarksSection = () => {
+        const renderTableSection = () => {
+           // const filteredSubjectMarks= subjectMarks.filter(mark=> mark.subName.subName===teachSubject)
+           const filteredSubjectMarks = subjectMarks.filter(mark => mark.subName.subName === teachSubject);
+
+           return (
+               <>
+                   <h3>Subject Marks:</h3>
+                   <Table>
+                       <TableHead>
+                           <StyledTableRow>
+                               <StyledTableCell>Subject</StyledTableCell>
+                               <StyledTableCell>Marks</StyledTableCell>
+                           </StyledTableRow>
+                       </TableHead>
+                       <TableBody>
+                           {filteredSubjectMarks.map((result, index) => (
+                               <StyledTableRow key={index}>
+                                   <StyledTableCell>{result.subName.subName}</StyledTableCell>
+                                   <StyledTableCell>{result.marksObtained}</StyledTableCell>
+                               </StyledTableRow>
+                           ))}
+                       </TableBody>
+                   </Table>
+                   <PurpleButton variant="contained"
                         onClick={() =>
                             navigate(
                                 `/Teacher/class/student/marks/${studentID}/${teachSubjectID}`
                             )}>
                         Add Marks
                     </PurpleButton>
-                    <br /><br /><br />
+               </>
+           );
+       };
+   
+       // Other code remains unch
+
+       const renderChartSection = () => {
+        // Filter subjectMarks based on the subject taught by the current teacher
+        const filteredSubjectMarks = subjectMarks.filter(mark => mark.subName.subName === teachSubject);
+
+        return (
+            <>
+                <CustomBarChart chartData={filteredSubjectMarks} dataKey="marksObtained" />
+            </>
+        );
+    };
+
+        return (
+            <Container>
+                {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0 ? (
+                    <>
+                        {selectedSection === 'table' && renderTableSection()}
+                        {selectedSection === 'chart' && renderChartSection()}
+
+                        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+                            <BottomNavigation value={selectedSection} onChange={handleSectionChange} showLabels>
+                                <BottomNavigationAction
+                                    label="Table"
+                                    value="table"
+                                    icon={selectedSection === 'table' ? <TableChartIcon /> : <TableChartOutlinedIcon />}
+                                />
+                                <BottomNavigationAction
+                                    label="Chart"
+                                    value="chart"
+                                    icon={selectedSection === 'chart' ? <InsertChartIcon /> : <InsertChartOutlinedIcon />}
+                                />
+                            </BottomNavigation>
+                        </Paper>
+                    </>
+                ) : null}
+            </Container>
+        );
+    }
+
+
+    return (
+        <>
+            {loading
+                ?
+                <>
+                    <div>Loading...</div>
+                </>
+                :
+
+                <div>
+                    <Box sx={{ width: '100%', typography: 'body1', height: '20px' }}>
+                        <TabContext value={value}>
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                <TabList onChange={handleChange} sx={{ position: 'fixed', width: '100%', bgcolor: 'background.paper', zIndex: 1 }}>
+                                    <Tab label="Attendance Details" value="1" />
+                                    <Tab label="Marks" value="2" />
+                                </TabList>
+                            </Box>
+                            <Container sx={{ marginTop: "3rem", marginBottom: "4rem" }}>
+                                <TabPanel value="1">
+                                    <StudentDetailsAndAttendanceSection />
+                                </TabPanel>
+                                <TabPanel value="2">
+                                    <StudentMarksSection />
+                                </TabPanel>
+                            </Container>
+                        </TabContext>
+                    </Box>
+
                 </div>
             }
         </>
@@ -217,3 +349,20 @@ const TeacherViewStudent = () => {
 }
 
 export default TeacherViewStudent
+
+const styles = {
+    attendanceButton: {
+        marginLeft: "20px",
+        backgroundColor: "#270843",
+        "&:hover": {
+            backgroundColor: "#3f1068",
+        }
+    },
+    styledButton: {
+        margin: "20px",
+        backgroundColor: "#02250b",
+        "&:hover": {
+            backgroundColor: "#106312",
+        }
+    }
+};
