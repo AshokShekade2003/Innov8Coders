@@ -31,6 +31,7 @@ const { getMeetings } = require('../controllers/zoom-controller.js');
 //ZOOM
 router.post('/zoomLink',getMeetings);
 
+
 // Admin
 router.post('/AdminReg', adminRegister);
 router.post('/AdminLogin', adminLogIn);

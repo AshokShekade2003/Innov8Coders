@@ -182,25 +182,41 @@ const TeacherClassDetails = () => {
       console.log("Date:", date);
       console.log("Start Time:", startTime);
       console.log("Duration:", duration);
+      console.log("Teacher:", teacher);
 
       let start_time = `${date}T${startTime}`;
 
       // Clear form fields if needed
       event.target.reset();
-      const res = await axios.post("http://127.0.0.1:5000/zoomLink", {
-        body: {
+      const resp = await fetch("http://localhost:5000/zoomLink", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           topic,
           start_time,
           duration,
           teacher,
-        },
-        headers: {
-          contentType: `application/json`,
-        },
+        }),
       });
+
+      const res = await resp.json();
+      console.log(res);
+      // const res = await axios.post("http://127.0.0.1:5000/zoomLink", {
+      //   body: {
+      //     topic,
+      //     start_time,
+      //     duration,
+      //     teacher,
+      //   },
+      //   headers: {
+      //     contentType: `application/json`,
+      //   },
+      // });
       // const d = await res.json();
       if (window.confirm("Go to Link to Zoom")) {
-        window.location.href = res.data;
+        window.location.href = res;
       }
     };
 
