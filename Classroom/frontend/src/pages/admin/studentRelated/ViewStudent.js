@@ -21,6 +21,7 @@ import Popup from '../../../components/Popup';
 
 const ViewStudent = () => {
     const [showTab, setShowTab] = useState(false);
+    const { subjectsList } = useSelector((state) => state.sclass); // Change 'state.sclass' to the actual path in your state
 
     const navigate = useNavigate()
     const params = useParams()
@@ -266,10 +267,36 @@ const ViewStudent = () => {
     }
 
     const StudentMarksSection = () => {
+        const [selectedSubject, setSelectedSubject] = useState('');
+
+        const handleSubjectChange = (event) => {
+            setSelectedSubject(event.target.value);
+        };
+
+        const filteredSubjectMarks = subjectMarks.filter((result) => {
+            return selectedSubject ? result.subName.subName === selectedSubject : true;
+        });
+
         const renderTableSection = () => {
             return (
                 <>
                     <h3>Subject Marks:</h3>
+                    <div>
+                        <Typography variant="h6" gutterBottom>
+                            Select Subject:
+                        </Typography>
+                        <select value={selectedSubject} onChange={handleSubjectChange}>
+                            <option value="">All Subjects</option>
+                            {subjectsList &&
+                                subjectsList.map((subject, index) => (
+                                    <option key={index} value={subject.subName}>
+                                        {subject.subName} ({subject.subCode})
+                                    </option>
+                                ))}
+                        </select>
+                    </div>
+                    <br/>
+                    
                     <Table>
                         <TableHead>
                             <StyledTableRow>
@@ -278,7 +305,7 @@ const ViewStudent = () => {
                             </StyledTableRow>
                         </TableHead>
                         <TableBody>
-                            {subjectMarks.map((result, index) => {
+                            {filteredSubjectMarks.map((result, index) => {
                                 if (!result.subName || !result.marksObtained) {
                                     return null;
                                 }
@@ -296,21 +323,37 @@ const ViewStudent = () => {
                     </Button>
                 </>
             );
-        }
+        };
 
         const renderChartSection = () => {
             return (
                 <>
-                    <CustomBarChart chartData={subjectMarks} dataKey="marksObtained" />
+                    <div>
+                        <Typography variant="h6" gutterBottom>
+                            Select Subject:
+                        </Typography>
+                        <select value={selectedSubject} onChange={handleSubjectChange}>
+                            <option value="">All Subjects</option>
+                            {subjectsList &&
+                                subjectsList.map((subject, index) => (
+                                    <option key={index} value={subject.subName}>
+                                        {subject.subName} ({subject.subCode})
+                                    </option>
+                                ))}
+                        </select>
+                    </div>
+                    <br/>
+                    <br/>
+                    
+                    <CustomBarChart chartData={filteredSubjectMarks} dataKey="marksObtained" subjectsList={subjectsList}/>
                 </>
             );
-        }
+        };
 
         return (
             <>
 
                 {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0 ? (
-
 
                     <>
                         {selectedSection === 'table' && renderTableSection()}
